@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>UrlAnalyzer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'url: ' + ${url.location}" />
+<p th:text="'title: ' + ${analysis.title}" />
+<p th:text="'h1: ' + ${analysis.headingOneCount}" />
+<a href="/">Submit another url</a>
+</body>
+</html>
