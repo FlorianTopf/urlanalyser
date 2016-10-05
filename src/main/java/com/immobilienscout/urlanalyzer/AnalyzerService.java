@@ -25,8 +25,7 @@ public class AnalyzerService {
             analysis.setLinksCount(this.processLinks(doc, url));
             analysis.setHasLogin(this.hasLoginForms(doc));
         } catch (Exception e) {
-            // TODO add proper error handling => return to user
-            analysis.setTitle(e.toString());
+            analysis.setError(e.getMessage());
         }
         return analysis;
     }

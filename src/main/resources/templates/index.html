@@ -2,12 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>UrlAnalyzer</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function resetResults() {
+            var input = document.getElementById("urlInput");
+            input.setAttribute("value", "");
+            var result = document.getElementById("urlAnalyzerResult");
+            if (result) {
+                result.parentNode.removeChild(result);
+            }
+        }
+        /*]]>*/
+    </script>
 </head>
 <body>
-<form action="#" th:action="@{/analysis}" th:object="${url}" method="post">
-    <p>Url: <input type="text" th:field="*{location}" /></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
+    <form id="urlAnalyzerForm" action="#" th:action="@{/}" th:object="${url}" method="post">
+        <p>
+            Url: <input id="urlInput" type="text" th:field="*{location}"/>
+        </p>
+        <p>
+            <input type="submit" value="Submit"/>
+            <input type="reset" value="Reset" onclick="resetResults();"/>
+        </p>
+    </form>
+    <div id="urlAnalyzerResult" th:if="${analysis}">
+        <p th:if="${analysis.error}"
+           th:text="'Error: ' + ${analysis.error}"
+           style="color:red;" >
+        </p>
+        <div th:if="not ${analysis.error}">
+            <p th:text="'url: ' + ${url.location}"></p>
+            <p th:text="'html version: ' + ${analysis.htmlVersion}"></p>
+            <p th:text="'title: ' + ${analysis.title}"></p>
+            <p th:each="heading : ${analysis.headingsCount}"
+               th:text="${heading.key} + ': ' + ${heading.value}">
+            </p>
+            <p th:each="link : ${analysis.linksCount}"
+               th:text="${link.key} + ': ' + ${link.value}">
+            </p>
+            <p th:text="'login form: ' + ${analysis.hasLogin}"></p>
+        </div>
+    </div>
 </body>
 </html>

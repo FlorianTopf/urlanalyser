@@ -1,14 +1,9 @@
 package com.immobilienscout.urlanalyzer;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @Controller
 public class UrlAnalyzerController {
@@ -22,10 +17,10 @@ public class UrlAnalyzerController {
         return "index";
     }
 
-    @PostMapping("/analysis")
+    @PostMapping("/")
     public String urlSubmit(@ModelAttribute Url url, Model model) {
         Analysis analysis = analyzerService.processUrl(url);
         model.addAttribute("analysis", analysis);
-        return "result";
+        return "index";
     }
 }

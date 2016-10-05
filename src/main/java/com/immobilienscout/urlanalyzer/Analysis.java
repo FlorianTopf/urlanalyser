@@ -9,6 +9,7 @@ public class Analysis {
     private Map<String, Integer> headingsCount;
     private Map<String, Integer> linksCount;
     private Boolean hasLogin;
+    private String error;
 
     public String getTitle() {
         return title;
@@ -48,5 +49,13 @@ public class Analysis {
 
     public void setHasLogin(Boolean hasLogin) {
         this.hasLogin = hasLogin;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }
