@@ -1,9 +1,14 @@
 package com.immobilienscout.urlanalyzer;
 
+import java.util.Map;
+
 public class Analysis {
 
     private String title;
-    private Integer headingOneCount;
+    private String htmlVersion;
+    private Map<String, Integer> headingsCount;
+    private Map<String, Integer> linksCount;
+    private Boolean hasLogin;
 
     public String getTitle() {
         return title;
@@ -13,11 +18,35 @@ public class Analysis {
         this.title = title;
     }
 
-    public Integer getHeadingOneCount() {
-        return headingOneCount;
+    public String getHtmlVersion() {
+        return htmlVersion;
     }
 
-    public void setHeadingOneCount(Integer headingOneCount) {
-        this.headingOneCount = headingOneCount;
+    public void setHtmlVersion(String htmlVersion) {
+        this.htmlVersion = htmlVersion;
+    }
+
+    public Map<String, Integer> getHeadingsCount() {
+        return headingsCount;
+    }
+
+    public void setHeadingsCount(Map<String, Integer> headingsCount) {
+        this.headingsCount = headingsCount;
+    }
+
+    public Map<String, Integer> getLinksCount() {
+        return linksCount;
+    }
+
+    public void setLinksCount(Map<String, Integer> linksCount) {
+        this.linksCount = linksCount;
+    }
+
+    public Boolean getHasLogin() {
+        return hasLogin;
+    }
+
+    public void setHasLogin(Boolean hasLogin) {
+        this.hasLogin = hasLogin;
     }
 }
