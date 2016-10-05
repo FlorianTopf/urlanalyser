@@ -1,5 +1,7 @@
 package com.immobilienscout.urlanalyzer;
 
+import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.DocumentType;
@@ -18,7 +20,15 @@ public class AnalyzerService {
     public Analysis processUrl(Url url) {
         Analysis analysis = new Analysis();
         try {
-            Document doc = Jsoup.connect(url.getLocation()).get();
+            Connection.Response response = Jsoup.connect(url.getLocation()).execute();
+            if (response.statusCode() >= 400) {
+                throw new HttpStatusException(
+                        response.statusCode() + " " + response.statusMessage(),
+                        response.statusCode(),
+                        url.getLocation()
+                );
+            }
+            Document doc = response.parse();
             analysis.setTitle(doc.title());
             analysis.setHeadingsCount(this.processHeadings(doc));
             analysis.setHtmlVersion(this.processHtmlVersion(doc));
@@ -29,7 +39,6 @@ public class AnalyzerService {
         }
         return analysis;
     }
-
 
     private Map<String, Integer> processHeadings(Document doc) {
         Elements headings = doc.select("h1, h2, h3, h4, h5, h6");
