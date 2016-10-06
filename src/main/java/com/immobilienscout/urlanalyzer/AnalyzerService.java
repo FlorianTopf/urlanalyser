@@ -21,19 +21,14 @@ public class AnalyzerService {
         Analysis analysis = new Analysis();
         try {
             Connection.Response response = Jsoup.connect(url.getLocation()).execute();
-            if (response.statusCode() >= 400) {
-                throw new HttpStatusException(
-                        response.statusCode() + " " + response.statusMessage(),
-                        response.statusCode(),
-                        url.getLocation()
-                );
-            }
             Document doc = response.parse();
             analysis.setTitle(doc.title());
             analysis.setHeadingsCount(this.processHeadings(doc));
             analysis.setHtmlVersion(this.processHtmlVersion(doc));
             analysis.setLinksCount(this.processLinks(doc, url));
             analysis.setHasLogin(this.hasLoginForms(doc));
+        } catch (HttpStatusException e) {
+            analysis.setError(e.getStatusCode() + " " + e.getMessage());
         } catch (Exception e) {
             analysis.setError(e.getMessage());
         }
